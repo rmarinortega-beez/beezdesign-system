@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--beez-bg);
+  color-scheme: dark;
+  font-family: var(--beez-font-sans);
+}
+
+body {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(180deg, color-mix(in srgb, var(--beez-primary) 4%, transparent), transparent 260px),
+    var(--beez-bg);
+  background-size: 42px 42px, 42px 42px, auto, auto;
+  color: var(--beez-text);
+  margin: 0;
+  min-width: 320px;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled,
+textarea:disabled,
+select:disabled {
+  cursor: not-allowed;
+}
+
+a {
+  color: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  background: var(--beez-primary-soft);
+  color: var(--beez-text);
+}

@@ -1,0 +1,54 @@
+[data-theme='beez'] {
+  --beez-primary: #f6b73c;
+  --beez-primary-hover: #ffd76a;
+  --beez-primary-soft: rgba(246, 183, 60, 0.1);
+  --beez-accent: #f6b73c;
+  --beez-accent-soft: rgba(246, 183, 60, 0.08);
+  --beez-focus: #ffd76a;
+  --beez-glow: rgba(246, 183, 60, 0.1);
+  --beez-info: #38bdf8;
+}
+
+[data-theme='gravity'] {
+  --beez-primary: #ff6b35;
+  --beez-primary-hover: #ff8b5f;
+  --beez-primary-soft: rgba(255, 107, 53, 0.1);
+  --beez-accent: #b6f04a;
+  --beez-accent-soft: rgba(182, 240, 74, 0.08);
+  --beez-focus: #ff8b5f;
+  --beez-glow: rgba(255, 107, 53, 0.1);
+  --beez-info: #ffb86b;
+}
+
+[data-theme='bmmanager'] {
+  --beez-primary: #2dd4bf;
+  --beez-primary-hover: #5eead4;
+  --beez-primary-soft: rgba(45, 212, 191, 0.1);
+  --beez-accent: #38bdf8;
+  --beez-accent-soft: rgba(56, 189, 248, 0.08);
+  --beez-focus: #5eead4;
+  --beez-glow: rgba(45, 212, 191, 0.1);
+  --beez-info: #38bdf8;
+}
+
+[data-theme='flow'] {
+  --beez-primary: #8b5cf6;
+  --beez-primary-hover: #a78bfa;
+  --beez-primary-soft: rgba(139, 92, 246, 0.11);
+  --beez-accent: #6366f1;
+  --beez-accent-soft: rgba(99, 102, 241, 0.08);
+  --beez-focus: #a78bfa;
+  --beez-glow: rgba(139, 92, 246, 0.1);
+  --beez-info: #7dd3fc;
+}
+
+[data-theme='beezid'] {
+  --beez-primary: #3b82f6;
+  --beez-primary-hover: #60a5fa;
+  --beez-primary-soft: rgba(59, 130, 246, 0.11);
+  --beez-accent: #34d399;
+  --beez-accent-soft: rgba(52, 211, 153, 0.08);
+  --beez-focus: #60a5fa;
+  --beez-glow: rgba(59, 130, 246, 0.1);
+  --beez-info: #93c5fd;
+}
