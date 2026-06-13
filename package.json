@@ -1,5 +1,5 @@
 {
-  "name": "@beez/ui",
+  "name": "@beez-projects/ui",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.cjs",
