@@ -1,16 +1,16 @@
 # Beez Design System
 
-Design Center inicial para BeezProjects. Es una app React + Vite + TypeScript que documenta visualmente los tokens, temas y componentes base de la futura libreria `@beez/ui`.
+Design Center inicial para BeezProjects y base publicable de la libreria React reutilizable `@beez/ui`.
 
 ## Instalar
 
-Ahora mismo este repositorio es el Design Center local. En el futuro, cuando se publique la libreria:
+Cuando el paquete este publicado:
 
 ```bash
 npm install @beez/ui
 ```
 
-En desarrollo local:
+En desarrollo local de este repositorio:
 
 ```bash
 npm install
@@ -22,10 +22,28 @@ npm install
 npm run dev
 ```
 
-Para validar produccion:
+Para construir la app demo desplegable, el mismo comando que debe usar Vercel:
 
 ```bash
 npm run build
+```
+
+Para levantar la demo visual del Design Center:
+
+```bash
+npm run dev
+```
+
+Para previsualizar la demo con build estatica:
+
+```bash
+npm run preview
+```
+
+Para construir la libreria publicable:
+
+```bash
+npm run build:lib
 ```
 
 ## Login del Design Center
@@ -51,9 +69,9 @@ La app usa `data-theme` sobre el documento y variables CSS. Temas disponibles:
 
 Desde React se usa `ThemeProvider` y `useBeezTheme`. En CSS, los temas viven en `src/styles/themes.css`.
 
-## Uso desde otra app React
+## Uso de componentes desde otra app React
 
-Cuando el paquete exista como `@beez/ui`, una app como Gravity, Flow, BMManager o BeezID deberia consumir estilos y componentes asi:
+Una app como Gravity, Flow, BMManager o BeezID debe importar primero los estilos publicos y luego los componentes:
 
 ```tsx
 import '@beez/ui/styles.css';
@@ -69,6 +87,8 @@ export function GravityPanel() {
   );
 }
 ```
+
+Los componentes publicos se exportan desde `@beez/ui`. Los estilos se exportan desde `@beez/ui/styles.css`.
 
 Temas soportados:
 
@@ -90,12 +110,33 @@ La entrada de estilos preparada para publicacion es:
 import '@beez/ui/styles.css';
 ```
 
-En este repositorio corresponde a `src/styles/styles.css`, que importa:
+En codigo fuente corresponde a `src/styles/styles.css`, que importa:
 
 - `tokens.css`
 - `themes.css`
 - `global.css`
 - `utilities.css`
+
+En el paquete compilado se publica como:
+
+```text
+dist/styles.css
+```
+
+## Build de libreria
+
+```bash
+npm run build:lib
+```
+
+Genera:
+
+- `dist/index.js` para ESM.
+- `dist/index.cjs` para CommonJS.
+- `dist/index.d.ts` y declaraciones asociadas.
+- `dist/styles.css` para consumo explicito de estilos.
+
+`react` y `react-dom` son `peerDependencies`. `lucide-react` queda como dependencia del paquete porque los componentes usan iconografia lineal.
 
 ## Anadir o modificar un tema
 
@@ -198,10 +239,55 @@ Salvo decision global de marca, una app no deberia sobrescribir:
 
 ## Futuro paquete @beez/ui
 
-La estructura ya separa `components/ui`, `theme` y `styles`. Para convertirlo en paquete:
+La estructura ya separa `components/ui`, `theme` y `styles`. Antes de publicar:
 
-- mover exports de `src/index.ts` a la entrada de libreria;
-- configurar Vite library mode o tsup;
-- publicar CSS de tokens/temas como asset importable;
-- mantener la app `Design Center` como documentacion/demo interna;
-- anadir tests unitarios y visual regression antes de consumirlo desde Gravity, BMManager, Flow o BeezID.
+- revisar `src/index.ts` para exportar cualquier componente nuevo;
+- ejecutar `npm run build:lib`;
+- ejecutar `npm pack` y probar el `.tgz` en una app consumidora;
+- mantener el Design Center como documentacion/demo interna;
+- anadir tests unitarios y visual regression antes de consumo amplio.
+
+## Publicar en GitHub Packages
+
+No publicar desde este repo hasta confirmar version y permisos. Cuando toque:
+
+1. Asegurar que `package.json` tiene:
+
+```json
+{
+  "name": "@beez/ui",
+  "version": "0.1.0",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  }
+}
+```
+
+2. Crear o revisar `.npmrc` para el scope:
+
+```text
+@beez:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+```
+
+3. Compilar y empaquetar:
+
+```bash
+npm run build:lib
+npm pack
+```
+
+Vercel debe usar:
+
+```bash
+npm run build
+```
+
+Ese comando genera la app demo en `dist`. No usar `build:lib` para despliegues de Vercel.
+
+4. Publicar cuando este aprobado:
+
+```bash
+npm publish
+```

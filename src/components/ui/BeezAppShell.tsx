@@ -9,7 +9,7 @@ export interface BeezNavItem {
   label: string
 }
 
-interface BeezAppShellProps {
+export interface BeezAppShellProps {
   activePage: BeezPageId
   children: ReactNode
   navItems: BeezNavItem[]
