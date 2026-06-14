@@ -1,13 +1,13 @@
 # Beez Design System
 
-Design Center inicial para BeezProjects y base publicable de la libreria React reutilizable `@beez/ui`.
+Design Center inicial para BeezProjects y base publicable de la libreria React reutilizable `@beez-projects/ui`.
 
 ## Instalar
 
 Cuando el paquete este publicado:
 
 ```bash
-npm install @beez/ui
+npm install @beez-projects/ui
 ```
 
 En desarrollo local de este repositorio:
@@ -46,16 +46,30 @@ Para construir la libreria publicable:
 npm run build:lib
 ```
 
-## Login del Design Center
+## Acceso del Design Center
 
-El Design Center usa Supabase Auth para proteger la demo visual. Reutiliza las mismas variables de entorno que routines:
+El Design Center queda protegido por BeezID. La ruta publica `/` muestra una entrada minima con acciones de login y registro. El Design Center real vive en `/app` y `/design-center`.
 
 ```bash
-VITE_SUPABASE_URL=
-VITE_SUPABASE_ANON_KEY=
+VITE_BEEZ_ID_URL=https://id.beezprojects.com
+VITE_DESIGN_APP_URL=https://design.beezprojects.com
 ```
 
-La `.env` local no se versiona. Para preparar otro entorno, copia `.env.example` a `.env` y rellena esos valores desde el proyecto Supabase correspondiente.
+Rutas de acceso:
+
+- `/`: landing publica de entrada.
+- `/auth/callback`: callback de BeezID.
+- `/app`: Design Center protegido.
+- `/design-center`: alias protegido del Design Center.
+- `/not-authorized`: sesion valida sin permisos suficientes.
+
+Las URLs hacia BeezID se construyen con:
+
+- `app=design-system`
+- `origin=${VITE_DESIGN_APP_URL}`
+- `redirect_uri=${VITE_DESIGN_APP_URL}/auth/callback`
+
+El SDK `@beez-projects/beezid` valida la sesion y el contexto de acceso. Para entrar se exige acceso a la app `design-system` y el permiso `design-system.access`.
 
 ## Cambiar de tema
 
@@ -74,8 +88,8 @@ Desde React se usa `ThemeProvider` y `useBeezTheme`. En CSS, los temas viven en 
 Una app como Gravity, Flow, BMManager o BeezID debe importar primero los estilos publicos y luego los componentes:
 
 ```tsx
-import '@beez/ui/styles.css';
-import { BeezButton, BeezCard, BeezThemeProvider } from '@beez/ui';
+import '@beez-projects/ui/styles.css';
+import { BeezButton, BeezCard, BeezThemeProvider } from '@beez-projects/ui';
 
 export function GravityPanel() {
   return (
@@ -88,7 +102,7 @@ export function GravityPanel() {
 }
 ```
 
-Los componentes publicos se exportan desde `@beez/ui`. Los estilos se exportan desde `@beez/ui/styles.css`.
+Los componentes publicos se exportan desde `@beez-projects/ui`. Los estilos se exportan desde `@beez-projects/ui/styles.css`.
 
 Temas soportados:
 
@@ -107,7 +121,7 @@ Temas soportados:
 La entrada de estilos preparada para publicacion es:
 
 ```tsx
-import '@beez/ui/styles.css';
+import '@beez-projects/ui/styles.css';
 ```
 
 En codigo fuente corresponde a `src/styles/styles.css`, que importa:
@@ -237,7 +251,25 @@ Salvo decision global de marca, una app no deberia sobrescribir:
 - Usar etiquetas tipo `IDENTITY LAYER`, `EVENT LAYER`, `AUTOMATION LAYER`, `SPORT & HEALTH`.
 - Separar patrones: Product card, Layer card, Architecture step, Event flow y Core module.
 
-## Futuro paquete @beez/ui
+## Seed de BeezID para esta app
+
+El SQL idempotente esta en:
+
+```text
+docs/sql/design-system-access-seed.sql
+```
+
+Debe ejecutarse en la base de datos de BeezID. Registra:
+
+- app `design-system`;
+- permisos `design-system.access`, `design-system.view`, `design-system.components.read`, `design-system.tokens.read`, `design-system.themes.read`, `design-system.manage`;
+- acceso de la organizacion `BeezProjects`;
+- rol `owner`;
+- acceso y permisos directos para `rmarinortega@outlook.es` si el usuario ya existe en `auth.users`.
+
+Si el usuario no existe, el seed no falla de forma destructiva: crea app/permisos y emite un `notice`. Ejecutalo de nuevo tras crear el usuario en BeezID.
+
+## Futuro paquete @beez-projects/ui
 
 La estructura ya separa `components/ui`, `theme` y `styles`. Antes de publicar:
 
@@ -255,7 +287,7 @@ No publicar desde este repo hasta confirmar version y permisos. Cuando toque:
 
 ```json
 {
-  "name": "@beez/ui",
+  "name": "@beez-projects/ui",
   "version": "0.1.0",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",
@@ -267,7 +299,7 @@ No publicar desde este repo hasta confirmar version y permisos. Cuando toque:
 2. Crear o revisar `.npmrc` para el scope:
 
 ```text
-@beez:registry=https://npm.pkg.github.com
+@beez-projects:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
 ```
 

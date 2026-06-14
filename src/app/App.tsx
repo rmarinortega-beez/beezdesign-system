@@ -1,6 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { BeezIDProvider } from '@beez-projects/beezid/react'
+import { routeFromPath } from './routes'
 import { AuthGate } from '../auth/AuthGate'
-import { AuthProvider } from '../auth/AuthProvider'
+import { AuthCallbackPage } from '../auth/AuthCallbackPage'
+import { BeezAuthRedirectPage } from '../auth/BeezAuthRedirectPage'
+import { getBeezIDClientConfig } from '../auth/beezid.config'
+import { NotAuthorizedPage } from '../auth/NotAuthorizedPage'
+import { PublicLandingPage } from '../auth/PublicLandingPage'
 import { BeezAppShell, type BeezNavItem, type BeezPageId } from '../components/ui/BeezAppShell'
 import { ThemeProvider } from '../theme/ThemeProvider'
 import { AppPreviewsPage } from '../pages/AppPreviewsPage'
@@ -51,23 +57,41 @@ function renderPage(page: BeezPageId) {
 
 export default function App() {
   const [activePage, setActivePage] = useState<BeezPageId>('overview')
+  const [pathname, setPathname] = useState(() => window.location.pathname)
+  const route = routeFromPath(pathname)
+
+  useEffect(() => {
+    const handleNavigation = () => setPathname(window.location.pathname)
+
+    window.addEventListener('popstate', handleNavigation)
+    return () => window.removeEventListener('popstate', handleNavigation)
+  }, [])
+
+  const designCenter = (
+    <AuthGate>
+      {(topbarActions) => (
+        <BeezAppShell
+          activePage={activePage}
+          navItems={navItems}
+          onPageChange={setActivePage}
+          topbarActions={topbarActions}
+        >
+          {renderPage(activePage)}
+        </BeezAppShell>
+      )}
+    </AuthGate>
+  )
 
   return (
     <ThemeProvider>
-      <AuthProvider>
-        <AuthGate>
-          {(topbarActions) => (
-            <BeezAppShell
-              activePage={activePage}
-              navItems={navItems}
-              onPageChange={setActivePage}
-              topbarActions={topbarActions}
-            >
-              {renderPage(activePage)}
-            </BeezAppShell>
-          )}
-        </AuthGate>
-      </AuthProvider>
+      <BeezIDProvider {...getBeezIDClientConfig()} autoLoadContext={false}>
+        {route.id === 'callback' ? <AuthCallbackPage /> : null}
+        {route.id === 'not-authorized' ? <NotAuthorizedPage /> : null}
+        {route.id === 'login' ? <BeezAuthRedirectPage flow="login" /> : null}
+        {route.id === 'register' ? <BeezAuthRedirectPage flow="register" /> : null}
+        {route.id === 'app' ? designCenter : null}
+        {route.id === 'landing' ? <PublicLandingPage /> : null}
+      </BeezIDProvider>
     </ThemeProvider>
   )
 }

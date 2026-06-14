@@ -1293,3 +1293,222 @@
     grid-template-columns: 1fr;
   }
 }
+
+.design-landing {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: clamp(18px, 3vw, 28px);
+  padding: clamp(18px, 3.5vw, 42px);
+  color: var(--beez-text);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--beez-primary) 10%, transparent), transparent 34%),
+    radial-gradient(circle at 84% 18%, color-mix(in srgb, var(--beez-accent) 10%, transparent), transparent 24%),
+    var(--beez-bg);
+  overflow: hidden;
+}
+
+.design-landing-header {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.design-landing-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--beez-text);
+}
+
+.design-landing-brand:hover {
+  color: var(--beez-text);
+  text-decoration: none;
+}
+
+.design-brand-mark,
+.design-panel-mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  color: var(--beez-primary);
+  background: var(--beez-primary-soft);
+  border: 1px solid color-mix(in srgb, var(--beez-primary) 42%, var(--beez-border));
+  border-radius: var(--beez-radius-md);
+}
+
+.design-landing-brand strong,
+.design-landing-brand small {
+  display: block;
+}
+
+.design-landing-brand small {
+  color: var(--beez-text-muted);
+  font-size: 0.78rem;
+}
+
+.design-landing-nav {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.design-landing-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 0.78fr);
+  gap: clamp(20px, 4vw, 56px);
+  align-items: center;
+  width: min(100%, 1180px);
+  margin: 0 auto;
+}
+
+.design-landing-copy {
+  display: grid;
+  gap: var(--space-4);
+  align-content: center;
+}
+
+.design-landing-copy h1 {
+  max-width: 12ch;
+  margin: 0;
+  font-size: clamp(3.1rem, 7.4vw, 6.6rem);
+  line-height: 0.9;
+}
+
+.design-landing-copy p {
+  max-width: 43rem;
+  margin: 0;
+  color: var(--beez-text-muted);
+  font-size: clamp(1.02rem, 1.7vw, 1.25rem);
+  line-height: 1.5;
+}
+
+.design-landing-benefits,
+.design-layer-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.design-landing-benefits span,
+.design-layer-list span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 10px;
+  color: var(--beez-text);
+  background: color-mix(in srgb, var(--beez-surface-elevated) 72%, transparent);
+  border: 1px solid var(--beez-border);
+  border-radius: var(--beez-radius-sm);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.design-landing-panel {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.design-panel-header {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.design-panel-header h2 {
+  margin: var(--space-1) 0 0;
+}
+
+.design-mock-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.design-mock-block {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--beez-surface-muted);
+  border: 1px solid var(--beez-border);
+  border-radius: var(--beez-radius-md);
+}
+
+.design-mock-block strong,
+.design-mock-block span {
+  display: block;
+}
+
+.design-mock-block span {
+  color: var(--beez-text-muted);
+  font-size: 0.88rem;
+}
+
+.design-value-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+  width: min(100%, 1180px);
+  margin: 0 auto;
+}
+
+.design-value-strip .beez-card {
+  display: grid;
+  gap: var(--space-1);
+  min-height: 6rem;
+}
+
+.design-value-strip span,
+.design-value-strip div {
+  color: var(--beez-text-muted);
+  font-size: 0.88rem;
+}
+
+.design-value-strip div {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+@media (max-width: 860px) {
+  .design-landing {
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .design-landing-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .design-landing-nav {
+    width: 100%;
+  }
+
+  .design-landing-nav .beez-button {
+    flex: 1;
+  }
+
+  .design-landing-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .design-landing-copy h1 {
+    font-size: 3rem;
+  }
+
+  .design-value-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .design-mock-grid,
+  .design-value-strip {
+    grid-template-columns: 1fr;
+  }
+}

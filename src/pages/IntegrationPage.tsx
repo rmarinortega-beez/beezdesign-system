@@ -3,10 +3,10 @@ import { BeezCard } from '../components/ui/BeezCard'
 import { BeezPageHeader } from '../components/ui/BeezPageHeader'
 import { beezThemes } from '../theme/themes'
 
-const installExample = `npm install @beez/ui`
+const installExample = `npm install @beez-projects/ui`
 
-const basicUsage = `import '@beez/ui/styles.css';
-import { BeezButton, BeezCard, BeezThemeProvider } from '@beez/ui';
+const basicUsage = `import '@beez-projects/ui/styles.css';
+import { BeezButton, BeezCard, BeezThemeProvider } from '@beez-projects/ui';
 
 export function GravityPanel() {
   return (
@@ -47,12 +47,12 @@ export function IntegrationPage() {
       <BeezPageHeader
         eyebrow="INTEGRATION"
         title="Use Beez UI from Gravity, Flow, BMManager or BeezID."
-        description="El Design Center sigue siendo la demo visual. Los componentes, temas y estilos quedan preparados para ser consumidos como futura libreria @beez/ui."
+        description="El Design Center sigue siendo la demo visual. Los componentes, temas y estilos quedan preparados para ser consumidos como futura libreria @beez-projects/ui."
       />
 
       <section className="beez-section beez-grid beez-grid-2">
         <CodeBlock code={installExample} label="Future install" />
-        <CodeBlock code={`import '@beez/ui/styles.css';`} label="Styles import" />
+        <CodeBlock code={`import '@beez-projects/ui/styles.css';`} label="Styles import" />
       </section>
 
       <section className="beez-section">
